@@ -14,18 +14,31 @@ public class Strategy{
     public static List<PlayerAction> decide(GameState gameState){
         int myId = gameState.game.player;
 
-        System.out.println("Test");
-
         List<Base> myBases = gameState.bases.stream().filter(base -> base.player == myId).toList();
         List<Base> foreignBases = gameState.bases.stream().filter(base -> base.player != myId).toList();
+        List<Base> emptyBases = gameState.bases.stream().filter(base -> base.player == 0).toList();
 
-        List<BoardAction> attacksOnMe = gameState.actions.stream().filter(action -> {
+        Base myFirstBase = myBases.get(0);
+
+        // Get empty bases
+        for (Base emptyBase: emptyBases) {
+            int population = emptyBase.population;
+            new PlayerAction(myFirstBase.uid, emptyBase.uid, population + 1);
+        }
+
+        List<BoardAction> attacksOnMyBases = gameState.actions.stream().filter(action -> {
             AtomicBoolean isOnMe = new AtomicBoolean(false);
             myBases.forEach(base -> {
                 isOnMe.set(base.uid == action.dest || isOnMe.get());
             });
             return isOnMe.get();
         }).toList();
+
+        for (BoardAction attack: attacksOnMyBases) {
+            System.out.println(attack);
+        }
+
+
 
 
         Base base = gameState.bases.get(0);
