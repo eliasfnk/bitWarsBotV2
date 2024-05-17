@@ -10,7 +10,7 @@ import models.PlayerAction;
 public class Strategy{
     
     public static List<PlayerAction> decide(GameState gameState){
-        //TODO: add your logic here
+        System.out.println("Test");
         Base base = gameState.bases.get(0);
         List<PlayerAction> playerAction = new ArrayList<>();
         playerAction.add(new PlayerAction(base.uid, base.uid, 1));
