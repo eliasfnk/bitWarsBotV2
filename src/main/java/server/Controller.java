@@ -15,7 +15,7 @@ public class Controller {
 
     @GetMapping("/")
     public String identify() {
-        return "Bitwars Player Java";
+        return "Hallo";
     }
     @PostMapping("/")
     public List<PlayerAction> index(@RequestBody GameState payload){
