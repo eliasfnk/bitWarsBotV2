@@ -21,7 +21,7 @@ public class Strategy{
         Base myFirstBase = myBases.get(0);
         System.out.println("My first base: " + myFirstBase.uid);
 
-        List<PlayerAction> playerActions = null;
+        List<PlayerAction> playerActions = new ArrayList<>();
 
         // Get empty bases
         for (Base emptyBase: emptyBases) {
@@ -34,6 +34,7 @@ public class Strategy{
             }
 
             if (myBases.get(x).population > emptyBase.population) {
+                assert false;
                 playerActions.add(new PlayerAction(myBases.get(x).uid, emptyBase.uid, population + 1));
             }
 
