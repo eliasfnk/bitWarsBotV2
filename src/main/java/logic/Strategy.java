@@ -123,10 +123,19 @@ public class Strategy {
     }
 
 
-    public static void consideringGracePeriod(GameState gameState) {
+    public static int consideringGracePeriod(GameState gameState, int amount, Base source, Base destination) {
 
         int gracePeriod = gameState.config.paths.gracePeriod;
         int deathRate = gameState.config.paths.deathRate;
+        double distance = getDistance(source, destination);
+
+        if (gracePeriod > distance || deathRate > 0.5*gracePeriod) {
+            return 0;
+        }
+        if (distance > gracePeriod) {
+            return (int) (amount + (distance - gracePeriod) * deathRate);
+        }
+        return amount;
 
     }
 
