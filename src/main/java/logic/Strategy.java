@@ -20,7 +20,6 @@ public class Strategy {
         List<Base> foreignBases = gameState.bases.stream().filter(base -> base.player != myId).toList();
         List<Base> emptyBases = gameState.bases.stream().filter(base -> base.player == 0).toList();
 
-        System.out.println("my ID: " + myId);
         System.out.println("my bases: " + myBases);
         System.out.println("foreign bases: " + foreignBases);
         System.out.println("empty bases: " + emptyBases);
@@ -28,11 +27,11 @@ public class Strategy {
         List<PlayerAction> playerActions = new ArrayList<>();
 
         playerActions = takeEmptyBases(myBases, emptyBases, playerActions);
-        System.out.println("player actions: " + playerActions);
+        System.out.println("player actions (empty): " + playerActions);
 
 
         playerActions = defendBases(gameState, allBases, myBases, playerActions);
-
+        System.out.println("player actions (defend): " + playerActions);
 
 
         //for (BoardAction attack: attacksOnMyBases) {
