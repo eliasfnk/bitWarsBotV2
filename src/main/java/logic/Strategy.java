@@ -38,7 +38,7 @@ public class Strategy{
         }).toList();
 
         for (BoardAction attack: attacksOnMyBases) {
-            System.out.println(attack);
+            System.out.println("Attack on my base: " + attack);
         }
 
 
