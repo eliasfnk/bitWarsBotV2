@@ -31,6 +31,9 @@ public class Strategy {
         System.out.println("player actions: " + playerActions);
 
 
+        playerActions = defendBases(gameState, allBases, myBases, playerActions);
+
+
 
         //for (BoardAction attack: attacksOnMyBases) {
         //    System.out.println("attack on one of my bases incoming: " + attack);
@@ -60,7 +63,7 @@ public class Strategy {
     }
 
 
-    public static List<PlayerAction> abc(GameState gameState, List<Base> allBases, List<Base> myBases, List<PlayerAction> playerActions) {
+    public static List<PlayerAction> defendBases(GameState gameState, List<Base> allBases, List<Base> myBases, List<PlayerAction> playerActions) {
 
         List<BoardAction> attacksOnMe = gameState.actions.stream().filter(action -> {
             AtomicBoolean isTargetingMe = new AtomicBoolean(false);
@@ -115,6 +118,14 @@ public class Strategy {
             }
         }
         return nearestBase;
+
+    }
+
+
+    public static void consideringGracePeriod(GameState gameState) {
+
+        int gracePeriod = gameState.config.paths.gracePeriod;
+        int deathRate = gameState.config.paths.deathRate;
 
     }
 
