@@ -26,7 +26,7 @@ public class Strategy {
 
         List<PlayerAction> playerActions = new ArrayList<>();
 
-        playerActions = takeEmptyBases(myBases, emptyBases, playerActions);
+        playerActions = takeEmptyBases(gameState, myBases, emptyBases, playerActions);
         System.out.println("player actions (empty): " + playerActions);
 
 
@@ -42,7 +42,7 @@ public class Strategy {
     }
 
 
-    public static List<PlayerAction> takeEmptyBases(List<Base> myBases, List<Base> emptyBases, List<PlayerAction> playerActions) {
+    public static List<PlayerAction> takeEmptyBases(GameState gameState, List<Base> myBases, List<Base> emptyBases, List<PlayerAction> playerActions) {
 
         for (Base emptyBase: emptyBases) {
 
@@ -52,7 +52,8 @@ public class Strategy {
             }
 
             if (myBases.get(x).population > emptyBase.population) {
-                playerActions.add(new PlayerAction(myBases.get(x).uid, emptyBase.uid, emptyBase.population + 1));
+                int amount = considerGracePeriod(gameState, emptyBase.population + 1, myBases.get(x), emptyBase);
+                playerActions.add(new PlayerAction(myBases.get(x).uid, emptyBase.uid, amount));
             }
 
         }
@@ -78,6 +79,7 @@ public class Strategy {
             if (attack.amount > target.population) {
                 // TODO: && attack.progress.distance < ...
                 Base sourceBase = getNearestBase(target, myBases);
+                int amount = considerGracePeriod(gameState, target.population + 1, sourceBase, target);
                 playerActions.add(new PlayerAction(sourceBase.uid, target.uid, target.population + 1));
             }
         }
@@ -122,7 +124,7 @@ public class Strategy {
     }
 
 
-    public static int consideringGracePeriod(GameState gameState, int amount, Base source, Base destination) {
+    public static int considerGracePeriod(GameState gameState, int amount, Base source, Base destination) {
 
         int gracePeriod = gameState.config.paths.gracePeriod;
         int deathRate = gameState.config.paths.deathRate;
