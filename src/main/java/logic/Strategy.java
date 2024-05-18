@@ -75,6 +75,7 @@ public class Strategy {
 
         for (BoardAction attack: attacksOnMe) {
             Base target = getBaseById(attack.dest, allBases);
+            assert target != null;
             if (attack.amount > target.population) {
                 // TODO: && attack.progress.distance < ...
                 Base sourceBase = getNearestBase(target, myBases);
