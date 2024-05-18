@@ -19,10 +19,13 @@ public class Strategy{
         List<Base> emptyBases = gameState.bases.stream().filter(base -> base.player == 0).toList();
 
         Base myFirstBase = myBases.get(0);
+        System.out.println("My first base: " + myFirstBase.uid);
 
         // Get empty bases
         for (Base emptyBase: emptyBases) {
+            System.out.println("Empty base: " + emptyBase);
             int population = emptyBase.population;
+            System.out.println("population: " + population);
             new PlayerAction(myFirstBase.uid, emptyBase.uid, population + 1);
         }
 
