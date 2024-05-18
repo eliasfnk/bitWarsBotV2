@@ -48,7 +48,7 @@ public class Strategy {
         for (Base emptyBase: emptyBases) {
 
             int x = 0;
-            while (myBases.get(x).population <= emptyBase.population) {
+            while (myBases.get(x).population <= emptyBase.population && x < myBases.size()) {
                 x++;
             }
 
