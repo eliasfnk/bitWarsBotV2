@@ -9,42 +9,17 @@ import models.BoardAction;
 import models.GameState;
 import models.PlayerAction;
 
-public class Strategy{
+public class Strategy {
     
-    public static List<PlayerAction> decide(GameState gameState){
+    public static List<PlayerAction> decide(GameState gameState) {
         int myId = gameState.game.player;
-        System.out.println("my ID: " + myId);
-
         List<Base> myBases = gameState.bases.stream().filter(base -> base.player == myId).toList();
         List<Base> foreignBases = gameState.bases.stream().filter(base -> base.player != myId).toList();
         List<Base> emptyBases = gameState.bases.stream().filter(base -> base.player == 0).toList();
-        System.out.println("my bases: " + myBases);
-        System.out.println("foreign bases: " + foreignBases);
-        System.out.println("empty bases: " + emptyBases);
-
-        Base myFirstBase = myBases.get(0);
-        System.out.println("my first base: " + myFirstBase.uid);
 
         List<PlayerAction> playerActions = new ArrayList<>();
 
-        // Get empty bases
-        for (Base emptyBase: emptyBases) {
-            //System.out.println("Empty base: " + emptyBase);
-            int population = emptyBase.population;
-            //System.out.println("population: " + population);
-            int x = 0;
-            while (myBases.get(x).population <= emptyBase.population) {
-                x++;
-            }
-
-            if (myBases.get(x).population > emptyBase.population) {
-                assert false;
-                playerActions.add(new PlayerAction(myBases.get(x).uid, emptyBase.uid, population + 1));
-            }
-
-            //Base sourceBase = myBases.get(0)
-
-        }
+        playerActions = takeEmptyBases(myBases, emptyBases, playerActions);
 
         List<BoardAction> attacksOnMyBases = gameState.actions.stream().filter(action -> {
             AtomicBoolean isOnMe = new AtomicBoolean(false);
@@ -58,10 +33,27 @@ public class Strategy{
             System.out.println("Attack on my base: " + attack);
         }
 
-
-
-
-        //playerAction.add(new PlayerAction(base.uid, base.uid, 1));
         return playerActions;
     }
+
+
+    public static List<PlayerAction> takeEmptyBases(List<Base> myBases, List<Base> emptyBases, List<PlayerAction> playerActions) {
+
+        for (Base emptyBase: emptyBases) {
+
+            int x = 0;
+            while (myBases.get(x).population <= emptyBase.population) {
+                x++;
+            }
+
+            if (myBases.get(x).population > emptyBase.population) {
+                playerActions.add(new PlayerAction(myBases.get(x).uid, emptyBase.uid, emptyBase.population + 1));
+            }
+
+        }
+
+        return playerActions;
+
+    }
+
 }
