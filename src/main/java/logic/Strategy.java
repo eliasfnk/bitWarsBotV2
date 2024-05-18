@@ -13,13 +13,17 @@ public class Strategy{
     
     public static List<PlayerAction> decide(GameState gameState){
         int myId = gameState.game.player;
+        System.out.println("my ID: " + myId);
 
         List<Base> myBases = gameState.bases.stream().filter(base -> base.player == myId).toList();
         List<Base> foreignBases = gameState.bases.stream().filter(base -> base.player != myId).toList();
         List<Base> emptyBases = gameState.bases.stream().filter(base -> base.player == 0).toList();
+        System.out.println("my bases: " + myBases);
+        System.out.println("foreign bases: " + foreignBases);
+        System.out.println("empty bases: " + emptyBases);
 
         Base myFirstBase = myBases.get(0);
-        System.out.println("My first base: " + myFirstBase.uid);
+        System.out.println("my first base: " + myFirstBase.uid);
 
         List<PlayerAction> playerActions = new ArrayList<>();
 
@@ -57,9 +61,7 @@ public class Strategy{
 
 
 
-        Base base = gameState.bases.get(0);
-        List<PlayerAction> playerAction = new ArrayList<>();
-        playerAction.add(new PlayerAction(base.uid, base.uid, 1));
-        return playerAction;
+        //playerAction.add(new PlayerAction(base.uid, base.uid, 1));
+        return playerActions;
     }
 }
